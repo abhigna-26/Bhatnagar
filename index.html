@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bhatnagar Production | Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables */
+        :root {
+            --primary-color: #1D2671;
+            --secondary-color: #70A3CC;
+            --dark-color: #0D1117;
+            --light-bg: #F0F2F5;
+            --card-bg: #162030;
+            --text-color: #E0E6F0;
+        }
+
+        /* Base & Global Styles */
+        html { scroll-behavior: smooth; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--dark-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        /* General Sections */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: auto;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+
+        section.fade-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Header & Navigation */
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: background-color 0.5s ease, box-shadow 0.5s ease;
+            background-color: transparent;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .main-header.scrolled {
+            background-color: var(--dark-color);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+        }
+
+        .brand-name h1 {
+            font-size: 1.6rem;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+        }
+
+        nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+        nav a:hover::after, nav a.active::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            overflow: hidden;
+        }
+        
+        /* Option 1: Video Background */
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+
+        /* Option 2: Image Background (Uncomment to use)
+        .hero-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('assets/img/hero-background.jpg');
+            background-size: cover;
+            background-position: center;
+            z-index: 0;
+        }
+        */
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(13, 17, 23, 0.7);
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            padding: 1rem;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        .hero-content h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            margin-bottom: 1rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .hero-content p {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-weight: 300;
+            margin-bottom: 2rem;
+        }
+        .hero-content span {
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+        .scroll-down {
+            display: inline-block;
+            margin-top: 2rem;
+            color: #fff;
+            font-size: 1.2rem;
+            text-decoration: none;
+            border: 2px solid #fff;
+            padding: 12px 24px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+        .scroll-down:hover {
+            background: var(--secondary-color);
+            border-color: var(--secondary-color);
+            color: var(--dark-color);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        /* Section Styling */
+        section h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            font-family: 'Montserrat', sans-serif;
+            position: relative;
+        }
+        section h2::after {
+            content: "";
+            width: 80px;
+            height: 4px;
+            background: var(--text-color);
+            display: block;
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        /* Grid & Card Styles */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        .card {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 30px rgba(0,0,0,0.3);
+            border: 1px solid var(--secondary-color);
+        }
+        .card h3 {
+            color: var(--secondary-color);
+            margin-bottom: 0.8rem;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+        }
+        .card p {
+            color: #ccc;
+        }
+
+        /* Contact Form */
+        form {
+            max-width: 700px;
+            margin: auto;
+            text-align: left;
+        }
+        form input, form textarea {
+            width: 100%;
+            padding: 15px;
+            margin: 12px 0;
+            border-radius: 8px;
+            border: 1px solid #333;
+            background: #222;
+            color: white;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        form input:focus, form textarea:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 8px rgba(76, 201, 240, 0.3);
+        }
+        form button {
+            padding: 15px 30px;
+            background: var(--secondary-color);
+            color: var(--dark-color);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        form button:hover {
+            background: #fff;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: #111;
+            color: white;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .footer-left p {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+            margin: 0;
+        }
+        .footer-right a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+        .footer-right a:hover { color: var(--secondary-color); }
+        .footer-right img {
+            height: 35px;
+            width: 35px;
+            border-radius: 50%;
+            background: var(--light-bg);
+            padding: 4px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-header {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            .header-left {
+                flex-direction: column;
+                text-align: center;
+                margin-bottom: 1rem;
+            }
+            .brand-name h1 { font-size: 1.8rem; }
+            nav {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.8rem;
+                padding: 0;
+            }
+            section { padding: 3rem 1rem; }
+            .grid { grid-template-columns: 1fr; }
+            .hero-content h1 { font-size: 2.5rem; }
+            .hero-content p { font-size: 1.2rem; }
+            footer { justify-content: center; text-align: center; }
+            .footer-right { margin-top: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="header-left">
+            <img src="assets/img/logo.png" alt="Bhatnagar Production Logo" class="logo">
+            <div class="brand-name">
+                <h1>Bhatnagar Production</h1>
+            </div>
+        </div>
+        <div class="header-right">
+            <nav>
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#services">Services</a>
+                <a href="#why">Why Us</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero" id="home">
+        <video class="hero-video" autoplay muted loop playsinline>
+            <source src="assets/video/hero.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Bhatnagar Production</h1>
+            <p>We Tell Stories That <span id="typing"></span></p>
+            <a href="#about" class="scroll-down">↓ Scroll Down</a>
+        </div>
+    </section>
+
+    <section id="about">
+        <h2>About Us</h2>
+        <p style="text-align:center; max-width:800px; margin:auto;">
+            At Bhatnagar Production, we believe every story deserves to be told in the most impactful way. 
+            We specialize in producing high-quality content that connects brands with their audience — 
+            from video shoots to web design to marketing strategies.
+        </p>
+    </section>
+
+    <section id="services">
+        <h2>Our Services</h2>
+        <div class="grid">
+            <div class="card"><h3>🎬 Videography & Photography</h3><p>Events, weddings, real estate, fashion & drone shoots.</p></div>
+            <div class="card"><h3>✂️ Video Editing</h3><p>Reels, promos, weddings, corporate films & cinematic edits.</p></div>
+            <div class="card"><h3>💻 Website Design</h3><p>Responsive, user-friendly, and custom-designed websites.</p></div>
+            <div class="card"><h3>📈 Digital Marketing</h3><p>SEO, Social Media, Meta & Google Ads, Content & Analytics.</p></div>
+            <div class="card"><h3>🎨 Social Media Management</h3><p>Creative content and strategy to grow your online presence.</p></div>
+        </div>
+    </section>
+
+    <section id="why">
+        <h2>Why Choose Us?</h2>
+        <div class="grid">
+            <div class="card"><h3>✔ Versatile Expertise</h3><p>From weddings to brand campaigns, we cover it all.</p></div>
+            <div class="card"><h3>✔ Latest Technology</h3><p>Advanced cameras, drones & editing tools for cinematic quality.</p></div>
+            <div class="card"><h3>✔ Customized Approach</h3><p>Tailored services for your brand goals and audience.</p></div>
+            <div class="card"><h3>✔ End-to-End Solutions</h3><p>From concept to execution, we handle everything.</p></div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>Contact Us</h2>
+        <form>
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <input type="text" placeholder="Subject" required>
+            <textarea rows="5" placeholder="Your Message" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+        <p style="text-align:center;margin-top:1rem;">
+            📍 Sec -31, Spring Field Colony, Faridabad <br>
+            📧 <a href="mailto:bhatnagarproduction186@gmail.com">bhatnagarproduction186@gmail.com</a><br>
+            📞 +91 7827434947 | +91 7827453899 <br>
+            🌐 <a href="http://www.bhatnagarproduction.com" target="_blank">www.bhatnagarproduction.com</a>
+        </p>
+    </section>
+
+    <footer>
+        <div class="footer-left">
+            <p>© 2025 Bhatnagar Production | All Rights Reserved</p>
+        </div>
+        <div class="footer-right">
+            <a href="https://www.talentronaut.in/" target="_blank">
+                <img src="assets/img/talentronaut-logo.png" alt="Talentronaut Logo">
+                <span>Designed by <strong>Talentronaut Technologies</strong></span>
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        // Typing Effect
+        const texts = ["Inspire", "Engage", "Grow"];
+        let count = 0, index = 0, currentText = "", letter = "";
+        (function type() {
+            if (count === texts.length) { count = 0; }
+            currentText = texts[count];
+            letter = currentText.slice(0, ++index);
+            document.getElementById("typing").textContent = letter;
+            if (letter.length === currentText.length) { 
+                count++;
+                index = 0; 
+                setTimeout(type, 1200); 
+            } else {
+                setTimeout(type, 150);
+            }
+        })();
+
+        // Scroll Effects
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('nav a');
+            const header = document.querySelector('.main-header');
+            const heroVideo = document.querySelector('.hero-video');
+
+            // Header/Navbar transition on scroll
+            window.addEventListener('scroll', () => {
+                const scrollPos = window.scrollY;
+                if (scrollPos > 100) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+                
+                // Parallax effect for hero video
+                heroVideo.style.transform = `translateY(${scrollPos * 0.4}px)`;
+            });
+
+            // Intersection Observer for scroll-reveal and active nav links
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.3 // Trigger when 30% of the section is visible
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const sectionId = entry.target.id;
+                    const navLink = document.querySelector(`nav a[href="#${sectionId}"]`);
+                    
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                        navLinks.forEach(link => link.classList.remove('active'));
+                        if (navLink) {
+                            navLink.classList.add('active');
+                        }
+                    } else {
+                        entry.target.classList.remove('fade-in');
+                        if (navLink && !window.scrollY) { // Keep home active at top
+                            navLink.classList.remove('active');
+                        }
+                    }
+                });
+            }, observerOptions);
+
+            // Observe each section
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+            
+            // Set initial active link
+            if (document.querySelector('#home').getBoundingClientRect().top >= 0) {
+                document.querySelector('nav a[href="#home"]').classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>
