@@ -129,10 +129,10 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg'); /* Add your image path here */
+            background-image: url('https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg');
             background-size: cover;
             background-position: center;
-            background-attachment: fixed; /* Parallax effect */
+            background-attachment: fixed;
             z-index: 0;
         }
 
@@ -286,16 +286,28 @@
             color: rgba(255,255,255,0.7);
             margin: 0;
         }
+        .contact-info a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .contact-info a:hover {
+            color: #fff;
+        }
+        .footer-right a {
+            color: #b0c4de;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .footer-right a:hover {
+            color: var(--secondary-color);
+        }
         .footer-right a {
             display: flex;
             align-items: center;
             gap: 8px;
-            color: rgba(255,255,255,0.7);
-            text-decoration: none;
             font-size: 0.9rem;
-            transition: color 0.3s ease;
         }
-        .footer-right a:hover { color: var(--secondary-color); }
         .footer-right img {
             height: 35px;
             width: 35px;
@@ -311,6 +323,50 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* Mobile Menu */
+        .mobile-menu-icon {
+            display: none;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        .bar {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 5px 0;
+            transition: 0.4s;
+        }
+        
+        /* Mobile Navigation Overlay */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 70%;
+            height: 100%;
+            background: var(--dark-color);
+            box-shadow: -4px 0 10px rgba(0,0,0,0.5);
+            transition: right 0.5s ease-in-out;
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .mobile-nav.open {
+            right: 0;
+        }
+        .mobile-nav a {
+            font-size: 1.5rem;
+            padding: 1.5rem;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .mobile-nav a:hover {
+            color: var(--secondary-color);
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .main-header {
@@ -323,9 +379,11 @@
             }
             .brand-name h1 { font-size: 1.3rem; }
             nav {
-                display: none; /* Hide navigation for now to fix the overlap */
+                display: none;
             }
-            /* You can add a hamburger menu to show/hide the nav links on mobile */
+            .mobile-menu-icon {
+                display: block;
+            }
             section { padding: 3rem 1rem; }
             .grid { grid-template-columns: 1fr; }
             .hero-content h1 { font-size: 2.5rem; }
@@ -345,15 +403,28 @@
             </div>
         </div>
         <div class="header-right">
-            <nav>
+            <nav id="desktop-nav">
                 <a href="#home">Home</a>
                 <a href="#about">About</a>
                 <a href="#services">Services</a>
                 <a href="#why">Why Us</a>
                 <a href="#contact">Contact</a>
             </nav>
+            <div class="mobile-menu-icon" onclick="toggleMobileMenu()">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
         </div>
     </header>
+
+    <nav class="mobile-nav" id="mobile-nav">
+        <a href="#home" onclick="toggleMobileMenu()">Home</a>
+        <a href="#about" onclick="toggleMobileMenu()">About</a>
+        <a href="#services" onclick="toggleMobileMenu()">Services</a>
+        <a href="#why" onclick="toggleMobileMenu()">Why Us</a>
+        <a href="#contact" onclick="toggleMobileMenu()">Contact</a>
+    </nav>
 
     <section class="hero" id="home">
         <div class="hero-background"></div>
@@ -404,12 +475,14 @@
             <textarea rows="5" placeholder="Your Message" required></textarea>
             <button type="submit">Send Message</button>
         </form>
-        <p style="text-align:center;margin-top:1rem;">
-            📍 Sec -31, Spring Field Colony, Faridabad <br>
-            📧 <a href="mailto:bhatnagarproduction186@gmail.com">bhatnagarproduction186@gmail.com</a><br>
-            📞 +91 7827434947 | +91 7827453899 <br>
-            🌐 <a href="http://www.bhatnagarproduction.com" target="_blank">www.bhatnagarproduction.com</a>
-        </p>
+        <div class="contact-info" style="text-align:center;margin-top:1rem;">
+            <p>
+                📍 Sec -31, Spring Field Colony, Faridabad <br>
+                📧 <a href="mailto:bhatnagarproduction186@gmail.com">bhatnagarproduction186@gmail.com</a><br>
+                📞 +91 7827434947 | +91 7827453899 <br>
+                🌐 <a href="http://www.bhatnagarproduction.com" target="_blank">www.bhatnagarproduction.com</a>
+            </p>
+        </div>
     </section>
 
     <footer>
@@ -448,6 +521,7 @@
             const navLinks = document.querySelectorAll('nav a');
             const header = document.querySelector('.main-header');
             const heroBackground = document.querySelector('.hero-background');
+            const mobileNav = document.getElementById('mobile-nav');
 
             // Header/Navbar transition on scroll
             window.addEventListener('scroll', () => {
@@ -459,7 +533,9 @@
                 }
                 
                 // Parallax effect for hero background
-                heroBackground.style.transform = `translateY(${scrollPos * 0.4}px)`;
+                if (heroBackground) {
+                    heroBackground.style.transform = `translateY(${scrollPos * 0.4}px)`;
+                }
             });
 
             // Intersection Observer for scroll-reveal and active nav links
@@ -499,6 +575,12 @@
                 document.querySelector('nav a[href="#home"]').classList.add('active');
             }
         });
+
+        // Toggle mobile menu
+        function toggleMobileMenu() {
+            const mobileNav = document.getElementById('mobile-nav');
+            mobileNav.classList.toggle('open');
+        }
     </script>
 </body>
 </html>
