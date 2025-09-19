@@ -269,6 +269,14 @@
             background: #fff;
             transform: translateY(-2px);
         }
+        .contact-info a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .contact-info a:hover {
+            color: #fff;
+        }
 
         /* Footer */
         footer {
@@ -286,27 +294,22 @@
             color: rgba(255,255,255,0.7);
             margin: 0;
         }
-        .contact-info a {
-            color: var(--secondary-color);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        .contact-info a:hover {
-            color: #fff;
+        .footer-right {
+            display: flex; /* Ensures items are side by side */
+            align-items: center;
+            gap: 8px; /* Space between logo and text */
         }
         .footer-right a {
             color: #b0c4de;
             text-decoration: none;
             transition: color 0.3s ease;
-        }
-        .footer-right a:hover {
-            color: var(--secondary-color);
-        }
-        .footer-right a {
             display: flex;
             align-items: center;
             gap: 8px;
             font-size: 0.9rem;
+        }
+        .footer-right a:hover {
+            color: var(--secondary-color);
         }
         .footer-right img {
             height: 35px;
@@ -315,6 +318,38 @@
             background: var(--light-bg);
             padding: 4px;
             box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+
+        /* Floating Logo Icon (New Styling) */
+        .floating-logo-icon {
+            position: fixed;
+            bottom: 80px; /* Adjusted to be above the footer on desktop */
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .floating-logo-icon a {
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .floating-logo-icon a:hover {
+            transform: translateY(-5px);
+        }
+        
+        .floating-logo-icon img {
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            background-color: var(--light-bg);
+            padding: 5px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .floating-logo-icon img:hover {
+            background-color: var(--secondary-color);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
         }
 
         /* Animations */
@@ -390,6 +425,10 @@
             .hero-content p { font-size: 1.2rem; }
             footer { justify-content: center; text-align: center; }
             .footer-right { margin-top: 1rem; }
+            .floating-logo-icon {
+                bottom: 100px; /* Adjusted for mobile view */
+                right: 15px;
+            }
         }
     </style>
 </head>
@@ -497,6 +536,12 @@
         </div>
     </footer>
 
+    <div class="floating-logo-icon">
+        <a href="https://www.talentronaut.in/" target="_blank">
+            <img src="logo.jpg" alt="Talentronaut Logo">
+        </a>
+    </div>
+
     <script>
         // Typing Effect
         const texts = ["Inspire", "Engage", "Grow"];
@@ -521,7 +566,6 @@
             const navLinks = document.querySelectorAll('nav a');
             const header = document.querySelector('.main-header');
             const heroBackground = document.querySelector('.hero-background');
-            const mobileNav = document.getElementById('mobile-nav');
 
             // Header/Navbar transition on scroll
             window.addEventListener('scroll', () => {
